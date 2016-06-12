@@ -1,2 +1,2 @@
-# Up For Grabs
-An app for grabbing what's up
+# wTorrent Client   
+Client side app for wTorrent service

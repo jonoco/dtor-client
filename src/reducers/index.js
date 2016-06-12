@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
-import user from './user';
-import item from './item';
-import submit from './submit';
-import users from './users';
+import { reducer as form } from 'redux-form';
+import authReducer from './auth-reducer';
+import torrReducer from './torr-reducer';
 
 const rootReducer = combineReducers({
-  user,
-  item,
-  submission: submit,
-  users
+  form,
+  auth: authReducer,
+  torrents: torrReducer
 });
 
 export default rootReducer;

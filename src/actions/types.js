@@ -8,26 +8,11 @@ export const LOGIN_FAILURE = 'login_failure';
 
 export const LOG_OUT = 'log_out';
 
-export const ITEMS_REQUEST = 'items_request';
-export const ITEMS_SUCCESS = 'items_success';
-export const ITEMS_FAILURE = 'items_failure';
+export const DRIVE_AUTH = 'drive_auth';
 
-export const DELETE_ITEM_REQUEST = 'delete_item_request';
-export const DELETE_ITEM_SUCCESS = 'delete_item_success';
-export const DELETE_ITEM_FAILURE = 'delete_item_failure';
+export const SUBMIT_TORRENT = 'submit_torrent';
+export const REQ_TORRENT = 'request_torrent';
+export const TORRENT_ADDED = 'torrent_added';
+export const TORRENT_UPDATE = 'torrent_update';
+export const REMOVE_TORRENT = 'remove_torrent';
 
-export const SUBMIT_REQUEST = 'submit_request';
-export const SUBMIT_SUCCESS = 'submit_success';
-export const SUBMIT_FAILURE = 'submit_failure';
-
-export const USERS_REQUEST = 'users_request';
-export const USERS_SUCCESS = 'users_success';
-export const USERS_FAILURE = 'users_failure';
-
-export const ADD_FRIEND_REQUEST = 'add_friend_request';
-export const ADD_FRIEND_SUCCESS = 'add_friend_success';
-export const ADD_FRIEND_FAILURE = 'add_friend_failure';
-
-export const REMOVE_FRIEND_REQUEST = 'remove_friend_request';
-export const REMOVE_FRIEND_SUCCESS = 'remove_friend_success';
-export const REMOVE_FRIEND_FAILURE = 'remove_friend_failure';

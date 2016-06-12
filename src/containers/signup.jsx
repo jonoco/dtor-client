@@ -1,79 +1,78 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
+import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class Signup extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { 
-			email: '',
-			password: '',
+		this.state = {
 			submitted: false
 		};
 	}
 
-	componentDidUpdate() {
-		if (this.props.user.token) {
-			browserHistory.push('/user');
-		}
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		
+	handleFormSubmit(formProps) {
+		this.props.signup(formProps);
 		this.setState({ submitted: true });
-		this.props.signup({ email: this.state.email, password: this.state.password });
 	}
 
-	handleChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
-	}
+	renderAlert() {
+		const { authError } = this.props;
+		const { submitted } = this.state;
 
-	renderErrorMessage() {
-		if (this.props.user.error && this.state.submitted) {
-			return <div className="error">{this.props.user.error}</div>;
+		if (authError && submitted) {
+			return (
+				<div className="alert alert-danger">
+					<strong>Oops</strong> {authError.message}
+				</div>
+			);
 		}
 	}
 
 	render() {
+		const { handleSubmit, fields: { username, password }} = this.props;
+
 		return (
-			<div className='container-fluid'>
-				<form onSubmit={this.handleSubmit.bind(this)}>
-					<div className="form-group">
-						<label>email</label>
-						<input 
-							type="text" 
-							className="form-control"
-							value={this.state.email} 
-							onChange={this.handleChange.bind(this)} 
-							name="email" />
-					</div>
-
-					<div className="form-group">
+			<div className="container">
+				<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+					<fieldset className="form-group">
+						<label>username</label>
+						<input type="text" className="form-control" {...username} />
+						{username.touched && username.error && <div className='text-danger'>{username.error}</div>}
+					</fieldset>
+					<fieldset className="form-group">
 						<label>password</label>
-						<input 
-							type="password" 
-							className="form-control"
-							value={this.state.password}
-							onChange={this.handleChange.bind(this)} 
-							name="password"/>
-					</div>
+						<input type="password" className="form-control" {...password} />
+						{password.touched && password.error && <div className='text-danger'>{password.error}</div>}
+					</fieldset>
 					
-					{this.renderErrorMessage()}
-
-					<button type="submit" className='btn btn-primary'>Sign up</button>
+					{this.renderAlert()}
+					<button type='submit' className="btn btn-primary">Sign up</button>
+					<Link to='login' className="btn btn-link">or log in</Link>
 				</form>
-
-				<Link to='/login'>log in</Link>
 			</div>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return { user: state.user };
+function validate(formProps) {
+	const errors = {};
+
+	if (!formProps.username) errors.username = 'Please enter an username';
+	if (!formProps.password) errors.password = 'Please enter a password';
+
+	return errors;
 }
 
-export default connect(mapStateToProps, actions)(Signup);
+function mapStateToProps(state) {
+	return { 
+		authError: state.auth.error 
+	};
+}
+
+export default reduxForm({
+	form: 'signup',
+	fields: ['username', 'password'],
+	validate
+}, mapStateToProps, actions)(Signup);

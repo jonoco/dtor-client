@@ -5,37 +5,48 @@ import * as actions from '../actions';
 
 class Header extends Component {
 	renderLinks() {
-		if (this.props.user.token) {
-			return (
-				<div>
-					<ul className="nav navbar-nav">
-						<li><Link className="btn" to="/items">Item list</Link></li>
-						<li><Link className="btn" to="/submit">Post item</Link></li>
-						<li><Link className="btn" to="/friends">Friends</Link></li>
-					</ul>
-					<ul className="nav navbar-nav navbar-right">
-						<li><Link className="btn" to="/user">{this.props.user.username}</Link></li>
-						<li><a className="btn" onClick={this.props.logout}>Log out</a></li>
-					</ul>
-				</div>
-			);
+		const { username } = this.props;
+		if (username) {
+			return [
+				<li className="nav-item" key={1}>
+					<Link to='torrent' className='nav-link'>Torrents</Link>
+				</li>,
+				<li className="nav-item" key={2}>
+					<Link to='signout' className='nav-link'>Sign out</Link>
+				</li>,
+				<li className="nav-item pull-xs-right" key={3}>
+					<span className='nav-link'>{username}</span>
+				</li>
+			];	
+		} else {
+			return [
+				<li className="nav-item" key={1}>
+					<Link to='signup' className='nav-link'>Sign up</Link>
+				</li>,
+				<li className="nav-item" key={2}>
+					<Link to='login' className='nav-link'>Log in</Link>
+				</li>
+			];
 		}
+		
 	}
 
 	render() {
 		return(
-			<nav className="navbar navbar-default">
-				<div className="container">
-					<Link to="/" className="navbar-brand">UFG</Link>
+			<nav className="navbar navbar-light">
+				<Link to="/" className="navbar-brand">dTor</Link>
+				<ul className="nav navbar-nav">
 					{this.renderLinks()}
-				</div>
+				</ul>
 			</nav>
 		);
 	}
 }
 
 function mapStateToProps(state) {
-	return { user: state.user };
+	return { 
+		username: state.auth.username
+	};
 }
 
 export default connect(mapStateToProps, actions)(Header);
