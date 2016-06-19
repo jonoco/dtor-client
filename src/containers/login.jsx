@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
@@ -10,6 +10,14 @@ class Signup extends Component {
 		this.state = {
 			submitted: false
 		};
+	}
+
+	componentWillMount() {
+		if (this.props.authenticated) browserHistory.push('/torrent');
+	}
+
+	componentWillUpdate(nextProps) {
+		if (nextProps.authenticated) browserHistory.push('/torrent');
 	}
 
 	handleFormSubmit(formProps) {
@@ -66,7 +74,10 @@ function validate(formProps) {
 }
 
 function mapStateToProps(state) {
-	return { authError: state.auth.error };
+	return { 
+		authError: state.auth.error,
+		authenticated: state.auth.token 
+	};
 }
 
 export default reduxForm({

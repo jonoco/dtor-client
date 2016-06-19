@@ -17,8 +17,6 @@ import Auth from './containers/auth';
 import RequireAuth from './containers/require-auth';
 
 import reducers from './reducers';
-import Async from './middlewares/async';
-import Redirection from './middlewares/redirection';
 
 const logger = createLogger();
 
@@ -29,13 +27,11 @@ const createPersistentStore = compose(
 
 // Tie the middleware together with the store
 const createStoreWithMiddleware = applyMiddleware(
-	Async, 
-	Redirection,
 	reduxThunk,
 	logger
 )(createPersistentStore);
 
-require('./stylesheets/main.scss')
+require('./stylesheets/main.scss');
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>

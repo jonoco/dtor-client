@@ -105,21 +105,15 @@ export const updateTorrent = (torrent) => {
 }
 
 import { REMOVE_TORRENT } from './types';
-export const removeTorrent = (token, torrentID) => {
+export const removeTorrent = (torrentID) => {
 	return function(dispatch) {
+		dispatch({
+			type: REMOVE_TORRENT,
+			id: torrentID
+		});
+
 		api.delete('/torrent', {
 		 torrentID
-		}, {
-			headers: { 'authorization': token }
-		})
-		.then(res => {
-			dispatch({
-				type: REMOVE_TORRENT,
-				id
-			});
-		})
-		.catch(err => {
-			console.log('error: ' + err.message);
 		});
 	};
 }

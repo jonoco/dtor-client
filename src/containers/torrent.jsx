@@ -37,7 +37,8 @@ class Torrent extends Component {
 
 	handleRemove(e) {
 		const id = e.currentTarget.dataset.id;
-		this.props.removeTorrent(id);
+		console.log(e.currentTarget.dataset.id);
+		// this.props.removeTorrent(id);
 	}
 
 	renderAuthButton() {
@@ -61,8 +62,8 @@ class Torrent extends Component {
 
 		return _.map(torrents, torrent => {
 			return (
-				<li className='list-group-item' key={torrent.name}>
-					<TorrentInfo click={this.handleRemove.bind(this)} torrent={torrent} />
+				<li className='list-group-item'>
+					<TorrentInfo click={this.handleRemove.bind(this)} torrent={torrent} key={torrent.infoHash}/>
 				</li>
 			);
 		});

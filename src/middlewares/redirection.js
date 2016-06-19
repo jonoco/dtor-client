@@ -1,3 +1,4 @@
+/// REDUNDANT
 import { browserHistory } from 'react-router';
 import {
 	LOGIN_SUCCESS, SIGNUP_SUCCESS, LOG_OUT
