@@ -15,4 +15,5 @@ export const REQ_TORRENT = 'request_torrent';
 export const TORRENT_ADDED = 'torrent_added';
 export const TORRENT_UPDATE = 'torrent_update';
 export const REMOVE_TORRENT = 'remove_torrent';
+export const TORRENT_ERROR = 'torrent_error';
 

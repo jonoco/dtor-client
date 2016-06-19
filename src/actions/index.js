@@ -76,7 +76,7 @@ export const authorize = (token, code) => {
 	};
 }
 
-import { SUBMIT_TORRENT, TORRENT_ADDED, REQ_TORRENT } from './types';
+import { SUBMIT_TORRENT, TORRENT_ADDED, REQ_TORRENT, TORRENT_ERROR } from './types';
 export const submitTorrent = (token, torrent) => {
 	return function(dispatch) {
 		dispatch({ type: REQ_TORRENT });
@@ -91,7 +91,11 @@ export const submitTorrent = (token, torrent) => {
 			dispatch({ type: TORRENT_ADDED });
 		})
 		.catch(err => {
-			console.log('error: ' + err.message);
+			console.log(`error: ${JSON.stringify(err)}`);
+			dispatch({ 
+				type: TORRENT_ERROR,
+				error: err.data.message
+			});
 		});
 	};
 }
@@ -112,9 +116,7 @@ export const removeTorrent = (torrentID) => {
 			id: torrentID
 		});
 
-		api.delete('/torrent', {
-		 torrentID
-		});
+		api.delete(`/torrent/${torrentID}`);
 	};
 }
 

@@ -9,6 +9,18 @@ import TorrentInfo from '../components/torrent-info';
 
 class Torrent extends Component {
 	componentWillMount() {
+		this.createSocket();
+	}
+
+	componentWillUnmount() {
+		this.closeSocket();
+	}
+
+	closeSocket() {
+		this.socket.close();
+	}
+
+	createSocket() {
 		this.socket = io('http://localhost:3090');
 		this.socket.emit('user', this.props.username);
 		
@@ -20,10 +32,6 @@ class Torrent extends Component {
 			// for socket debugging
 			console.log(msg);
 		});
-	}
-
-	componentWillUnmount() {
-		this.socket.close();
 	}
 
 	handleDriveAuth() {
@@ -38,7 +46,7 @@ class Torrent extends Component {
 	handleRemove(e) {
 		const id = e.currentTarget.dataset.id;
 		console.log(e.currentTarget.dataset.id);
-		// this.props.removeTorrent(id);
+		this.props.removeTorrent(id);
 	}
 
 	renderAuthButton() {
@@ -62,15 +70,15 @@ class Torrent extends Component {
 
 		return _.map(torrents, torrent => {
 			return (
-				<li className='list-group-item'>
-					<TorrentInfo click={this.handleRemove.bind(this)} torrent={torrent} key={torrent.infoHash}/>
+				<li className='list-group-item' key={torrent.infoHash}>
+					<TorrentInfo click={this.handleRemove.bind(this)} torrent={torrent}/>
 				</li>
 			);
 		});
 	}
 
 	render() {
-		const { handleSubmit, fields: { torrent }} = this.props;
+		const { drive, torrentState, handleSubmit, fields: { torrent }} = this.props;
 
 		return (
 			<div className="torrent">
@@ -82,7 +90,7 @@ class Torrent extends Component {
 					<div className="col-md-9">
 						<form onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
 							<div className="input-group">
-								<input {...torrent} className='form-control' type="text" placeholder='torrent goes here'/>
+								<input {...torrent} className='form-control' type="text" placeholder='copy torrent link here'/>
 								<span className="input-group-btn">
 									<button type="submit" className={`btn btn-primary ${!torrent.value && 'disabled'}`}>Submit</button>		
 
@@ -93,8 +101,10 @@ class Torrent extends Component {
 				</div>
 
 				{torrent.touched && torrent.error && <Alert type='danger' message={torrent.error} />}
-				{!this.props.drive && <Alert type='warning' message='You must authenticate your Drive account to transfer torrents to it' />}
+				{!drive && <Alert type='warning' message='You must authenticate your Drive account to transfer torrents to it' dismissible={true} />}
 				
+				{torrentState.error && <Alert type='danger' message={torrentState.error} dismissible={true} />}
+
 				<br />
 				<ul className="list-group">
 					{this.renderTorrentInfo()}
@@ -110,7 +120,8 @@ function mapStateToProps(state) {
 		token: state.auth.token,
 		drive: state.auth.driveAuth,
 		username: state.auth.username,
-		torrents: state.torrents 
+		torrents: state.torrents,
+		torrentState: state.torrentState 
 	};
 }
 
