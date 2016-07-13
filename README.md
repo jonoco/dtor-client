@@ -1,2 +1,2 @@
-# wTorrent Client   
-Client side app for wTorrent service
+# dtor Client   
+Client side app for dtor service
