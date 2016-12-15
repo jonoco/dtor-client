@@ -6,7 +6,7 @@
   "repository": "",
   "scripts": {
     "start": "MODE=dev node server",
-    "build": "webpack --progress --config webpack.production.config.js",
+    "build": "rm -rf build && webpack --progress --config webpack.production.config.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
     "deploy": "gh-pages -d build"

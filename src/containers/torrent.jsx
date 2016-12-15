@@ -21,7 +21,7 @@ class Torrent extends Component {
 	}
 
 	createSocket() {
-		this.socket = io('http://localhost:3090');
+		this.socket = io('https://dtor-api.herokuapp.com');
 		this.socket.emit('user', this.props.username);
 		
 		this.socket.on('torrent', torrent => {
