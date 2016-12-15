@@ -1,17 +1,20 @@
 var webpack = require('webpack');
 var path = require('path');
 var autoprefixer = require('autoprefixer');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var buildPath = path.resolve(__dirname, 'build');
 var mainPath = path.resolve(__dirname, 'src', 'index');
 var srcPath = path.resolve(__dirname, 'src');
 
 module.exports = {
-  entry: mainPath,
+  entry: [mainPath],
   output: {
     path: buildPath,
-    publicPath: '/',
-    filename: 'bundle.js'
+    publicPath: '/dtor-client/',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[chunkhash].js'
   },
   module: {
     loaders: [
@@ -37,6 +40,9 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'template.html'
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({

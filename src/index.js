@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import createLogger from 'redux-logger';
 import persistState from 'redux-localstorage';
 import reduxThunk from 'redux-thunk';
@@ -35,7 +35,7 @@ require('./stylesheets/main.scss');
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
 			<Route name='home' path='/' component={App}>
 				<IndexRoute component={Home} />
 				<Route path='login' component={Login}/>
