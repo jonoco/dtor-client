@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
@@ -13,11 +13,11 @@ class Signup extends Component {
 	}
 
 	componentWillMount() {
-		if (this.props.authenticated) browserHistory.push('/torrent');
+		if (this.props.authenticated) hashHistory.push('/torrent');
 	}
 
 	componentWillUpdate(nextProps) {
-		if (nextProps.authenticated) browserHistory.push('/torrent');
+		if (nextProps.authenticated) hashHistory.push('/torrent');
 	}
 
 	handleFormSubmit(formProps) {

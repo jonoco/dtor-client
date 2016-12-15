@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
-import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import createLogger from 'redux-logger';
 import persistState from 'redux-localstorage';
 import reduxThunk from 'redux-thunk';
